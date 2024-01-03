@@ -7,7 +7,13 @@ use App\Models\Brand;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
-{
+{   
+   
+    function BrandProductPage(){
+
+        return view('pages.brand-page');
+
+    }
     function brandList(){
 
         $brand=Brand::get();

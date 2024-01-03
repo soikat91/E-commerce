@@ -24,6 +24,7 @@ class CustomerDetail extends Model
                     'ship_postcode',
                     'ship_country',
                     'ship_phone',
+                    'ship_fax',
                     'user_id'
                 ];
 

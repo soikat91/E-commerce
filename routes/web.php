@@ -1,13 +1,16 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use PhpParser\Node\Expr\AssignOp\Pow;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PolicyController;
+use App\Http\Middleware\TokenAuthenticate;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
-use App\Http\Middleware\TokenAuthenticate;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +61,30 @@ Route::post('/product-cart-create',[ProductController::class,'cartCreate'])->mid
 Route::get('/product-cart-list',[ProductController::class,'cartList'])->middleware(TokenAuthenticate::class);
 Route::get('/product-remove-cart/{product_id}',[ProductController::class,'productRemoveCart'])->middleware(TokenAuthenticate::class);
 
-// Invoice and Payment
 
+
+// Invoice and Payment
 Route::post('/invoice-create',[InvoiceController::class,'invoiceCreate'])->middleware( TokenAuthenticate::class);
+Route::get('/invoice-list',[InvoiceController::class,'invoiceList'])->middleware( TokenAuthenticate::class);
+Route::get('/invoice-product-list/{invoice_id}',[InvoiceController::class,'invoiceProductList'])->middleware( TokenAuthenticate::class);
+
+Route::post('/PaymentSuccess',[InvoiceController::class,'paymentSuccess']);
+Route::post('/PaymentCancel',[InvoiceController::class,'paymentCancel']);
+Route::post('/PaymentFail   ',[InvoiceController::class,'paymentFail']);
+
+// policy url
+
+Route::get('/policy/{type}',[PolicyController::class,'getPolicy']);
+
+
+// page url
+
+Route::get('/',[HomeController::class,'homePage']);
+Route::get('/category-product',[CategoryController::class,'CategoryProductPage']);
+Route::get('/brand-product',[BrandController::class,'BrandProductPage']);
+Route::get('/PolicyByType',[PolicyController::class,'policyList']);
+Route::get('/details',[ProductController::class,'Details']);
+Route::get('/login',[UserController::class,'loginPage']);
+Route::get('/verify',[UserController::class,'verifyPage']);
+Route::get('/wish',[ProductController::class,'wishPage']);
+Route::get('/cart',[ProductController::class,'cartPage']);

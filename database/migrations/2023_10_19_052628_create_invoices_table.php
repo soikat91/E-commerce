@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('cus_details',50);
             $table->string('ship_details',50);
             $table->string('tran_id',50);           
-            $table->string('val_id',50);
+            $table->string('val_id',50)->default(0);
             $table->enum('delivery_status',['Pending','Processing','Completed']);
             $table->string('payment_status',50);
             $table->unsignedBigInteger('user_id');

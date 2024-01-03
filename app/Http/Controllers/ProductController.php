@@ -17,6 +17,20 @@ use function Laravel\Prompts\select;
 class ProductController extends Controller
 {
     
+    function Details(){
+        
+        return view('pages.details-page');
+    }
+
+    function wishPage(){
+        
+        return view('pages.wish-page');
+    }
+    function cartPage(){
+
+        return view('pages.cart-page');  
+    }
+
     function listProductByCategory(Request $request){
         
         $data=Product::where('category_id',$request->id)->with('category','brand')->get();
@@ -52,8 +66,9 @@ class ProductController extends Controller
     function ProductReview(Request $request){
         $data=ProductReview::where('product_id',$request->product_id)
         ->with(['profile'=>function($query)
-        {$query->select('id','cus_name');}])
-        ->get();
+        {
+            $query->select('id','cus_name');
+        }])->get();
         return ResponseHelper::out('success',$data,200);
     }
 
@@ -79,7 +94,7 @@ class ProductController extends Controller
     function productWish(Request $request){
 
             $user_id=$request->header('id');
-            $data=ProductWish::where('user_id',$user_id)->get();
+            $data=ProductWish::where('user_id',$user_id)->with('product')->get();
             return ResponseHelper::out('success',$data,200);
     }
     function productWishCreate(Request $request){

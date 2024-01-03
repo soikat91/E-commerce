@@ -12,6 +12,17 @@ use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
+
+   function loginPage(){
+
+      return view('pages.login-page');
+   }
+
+   function verifyPage(){
+      return view('pages.verify-page');
+   }
+
+
     public function userLogin(Request $request){
 
          try{
@@ -20,7 +31,7 @@ class UserController extends Controller
             $details=['code'=>$otp];
             Mail::to($email)->send(new otpmail($details));
             User::updateOrCreate(['email'=>$email],['email'=>$email,'otp'=>$otp]);
-            return ResponseHelper::out('success',"Your 6 degit OTP send",201);
+            return ResponseHelper::out('success',"Your 6 degit OTP send",200);
 
          }catch(Exception $e){
 
@@ -52,6 +63,6 @@ class UserController extends Controller
 
     function userLogOut(Request $request){
 
-      return redirect('/userlogout')->cookie('token'," ",-1);
+      return redirect('/')->cookie('token'," ",-1);
     }
 }
